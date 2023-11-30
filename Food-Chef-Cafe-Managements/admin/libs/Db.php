@@ -5,11 +5,11 @@ class Db{
 		
 	}
 	function addEdit($table,$data,$id=''){
+
 		$data=array_map('addslashes',$data);
 		$qry="insert into $table set ";
 		$wh='';
-		if($id)
-		{
+		if($id){
 			$qry="update $table set ";
 			$wh=" where id=$id";
 		}
@@ -22,9 +22,7 @@ class Db{
 	}
 	function fetchOne($table,$id,$cols='*'){
 		return mysqli_fetch_assoc(mysqli_query($this->con,"select $cols from $table where id=$id"));
-	}
-	function loginFetchOne($qry){
-		return mysqli_fetch_assoc(mysqli_query($this->con,$qry));
+			
 	}
 	function fetchQry($qry){
 		return mysqli_fetch_assoc(mysqli_query($this->con,$qry));

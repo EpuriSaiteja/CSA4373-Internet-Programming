@@ -1,51 +1,41 @@
-<?php
-if($id){	
-	$dbobj->delete('services',$id);
-	header("Location:".BASEURL."services");
-	exit;
-}
-	$alldata=$dbobj->fetchAll("select * from services order by id desc");
-
-?>
-<style type="text/css">
-	table{
-		font-size: 20px;
-	}
-</style>
-
-
-
-<table class="table table-bordered table-striped table-hover">
-	<tr>
-		<th>S.No.</th>
-		<th>Icon</th>
-		<th>Description</th>
-		<th>Action</th>
-	</tr>
-	<tr>
-		<td colspan="4"><a href="<?php echo BASEURL;?>services/create">Add New Record</a></td>
-	</tr>
-	<?php
-	$sno=0;
-	foreach ($alldata as $data) {
-	?>
-	<tr>
-		<td><?php echo ++$sno; ?></td>
-		<td><?php echo $data['icon'] ?></td>
-		<td><?php echo $data['description'] ?></td>
-		<td>
-			<a href="<?php echo BASEURL;?>services/create/<?php echo $data['id']; ?>">Edit</a>&nbsp; &nbsp; | &nbsp; &nbsp;
-			<a href="#" onclick="delclick('<?php echo BASEURL;?>services/index/<?php echo $data['id']; ?>')">Delete</a>
-		</td>
-	</tr>
-	<?php } ?>
-	
-</table>
-<script type="text/javascript">
-	function delclick(path)
-	{
-		if(confirm("do you want to delete this record")){
-			location.href=path;
-		}
-	}
-</script>
+<!-- services -->
+<div class="services" id="services">
+		<div class="container">
+		<div class="heading">
+			<h3 data-aos="zoom-in" >Our Services</h3>
+		</div>
+			<div class="w3-agileits-services-grids">
+				<div data-aos="fade-down" class="col-md-6 agile-services-left">
+					<div class="agile-services-left-grid">
+						<div class="services-icon">
+							<?php 
+							$services_data=$dbobj->fetchAll("select * from services");
+							foreach ($services_data as $services_value) {
+							?>
+								<div class="col-md-4 services-icon-info">
+									<i class="<?php echo stripslashes($services_value['icon']); ?>"></i>
+								</div>
+								<div class="col-md-8 services-icon-text">
+								<?php echo $services_value['description'];?>
+								</div>
+								<div class="clearfix"> </div>
+							<?php } ?>
+						</div>
+						<div class="clearfix"> </div>
+					</div>
+				</div>
+				<div class="col-md-6 w3-agile-services-right">
+					<div data-aos="zoom-in" class="col-md-6 service1">
+						<img src="<?php echo BASEURL;?>public/images/c1.png" alt="" />
+					</div>
+					<div data-aos="zoom-in" class="col-md-6 serviceimg">
+						<img src="<?php echo BASEURL;?>public/images/service1.jpg" alt="" />
+						<img src="<?php echo BASEURL;?>public/images/service2.jpg" alt="" />
+					</div>
+					<div class="clearfix"> </div>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+		</div>
+</div>
+<!-- //services -->

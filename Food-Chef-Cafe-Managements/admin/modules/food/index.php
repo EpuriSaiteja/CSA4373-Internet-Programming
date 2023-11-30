@@ -1,70 +1,31 @@
-<?php
-// $_SESSION['message']="data saved";
-if($id){
-	// session_start();
-	$dbobj->delete('food',$id);
-	header("Location:".BASEURL."food");
-	exit;
-}
-	$alldata=$dbobj->fetchAll("select * from food order by id desc");
+<!-- gallery -->
+	<div class="gallery" id="food">
+		<div class="heading">
+			<h3 data-aos="zoom-in" >Our Food</h3>
+		</div>
+			<div class="gallery-grids">
+				<?php 
+						$food_data=$dbobj->fetchAll("select * from food");
+						foreach ($food_data as $food_value) {
+				?>
+				<div data-aos="flip-right" class="col-md-3 gallery-grid">
+					<div class="grid">
+						
+						<figure class="effect-roxy">
+							<a class="example-image-link" href="<?php echo BASEURL."admin/public/images/$food_value[image]";?>" data-lightbox="example-set" data-title="">
+								<img src="<?php echo BASEURL."admin/public/images/$food_value[image]";?>" alt="" style="width: 200px; height: 250px;"/>
+								<figcaption>
+									<h3><?php echo $food_value['title']; ?></h3>
+									<p><?php echo $food_value['description']; ?></p>
+								</figcaption>	
+							</a>
+						</figure>
+					
+					</div>
+				</div>
+				<?php }?>
+				<div class="clearfix"> </div>
 
-
-?>
-<style type="text/css">
-	table{
-		font-size: 20px;
-	}
-</style>
-
-
-<table class="table table-bordered table-striped table-hover">
-	<tr>
-		<th>S.No.</th>
-		<th>Title</th>
-		<th>Description</th>
-		<th>Images</th>
-		<th>Action</th>
-	</tr>
-	<tr>
-		<td colspan="5"><a href="<?php echo BASEURL;?>food/create">Add New Record</a></td>
-	</tr>
-	<?php
-	$sno=0;
-	foreach ($alldata as $data) {
-	?>
-	<tr>
-		<td><?php echo ++$sno; ?></td>
-		<td><?php echo $data['title'] ?></td>
-		<td><?php echo $data['description'] ?></td>
-		<td>
-			<?php if($data['image']){
-							if(file_exists("public/images/$data[image]")){
-							?>
-								<img class="one" src="<?php echo BASEURL."public/images/$data[image]";?>" height="50px" width="50px" />
-							<?php
-
-							}else{
-								echo "Not uploaded Properly";
-							}
-
-						}else{
-							echo "not uploaded";
-						}				
-			?>
-		</td>
-		<td>
-			<a href="<?php echo BASEURL;?>food/create/<?php echo $data['id']; ?>">Edit</a>&nbsp; &nbsp; | &nbsp; &nbsp;
-			<a href="#" onclick="delclick('<?php echo BASEURL;?>food/index/<?php echo $data['id']; ?>')">Delete</a>
-		</td>
-	</tr>
-	<?php } ?>
-	
-</table>
-<script type="text/javascript">
-	function delclick(path)
-	{
-		if(confirm("do you want to delete this record")){
-			location.href=path;
-		}
-	}
-</script>
+			</div>
+	</div>
+<!-- //gallery -->

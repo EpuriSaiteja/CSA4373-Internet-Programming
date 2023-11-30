@@ -1,60 +1,92 @@
-<?php
-// $_SESSION['message']="data saved";
-if($id){
-	// session_start();
-	$dbobj->delete('contact',$id);
+<!-- contact -->
+	<div class="contact" id="contact">
+		<div class="container">
+			<div class="heading">
+				<h3 data-aos="zoom-in" >Get In Touch</h3>
+			</div>
+		</div>
+			<div class="w3layouts-grids">
+				<div data-aos="flip-left" class="col-md-6 contact-left">
+					<h3 data-aos="zoom-in" >Contact information</h3>
+					<div class="contact-info">
+						<div class="contact-info-left">
+							<i class="fa fa-map-marker" aria-hidden="true"></i>
+						</div>
+						<div class="contact-info-right">
+							<h5>Address</h5>
+							<p>Extended Stay Restaurant<br>
+								<span>87th St, Ansul City</span>
+								BKN (Raj.).
+							</p>
+						</div>
+						<div class="clearfix"> </div>
+					</div>
+					<div class="contact-info">
+						<div class="contact-info-left">
+							<i class="fa fa-phone" aria-hidden="true"></i>
+						</div>
+						<div class="contact-info-right">
+							<h5>Mobile</h5>
+							<ul>
+								<li>+91 7792956100</li>
+							</ul>
+						</div>
+						<div class="clearfix"> </div>
+					</div>
+					<div class="contact-info">
+						<div class="contact-info-left">
+							<i class="fa fa-envelope" aria-hidden="true"></i>
+						</div>
+						<div class="contact-info-right">
+							<h5>E-Mail</h5>
+							<ul>
+								<li><a href="mailto:rohitsankhla1999@gmail.com">rohitsankhla1999@gmail.com</a></li>
+							</ul>
+						</div>
+						<div class="clearfix"> </div>
+					</div>
+				</div>
+				<div data-aos="flip-right" class="col-md-6 contact-form">
+					<?php if(isset($_SESSION['msg'])){
+						// echo "hello";exit;
+						// print_r($_SESSION);exit;
 
-	// $_SESSION['message']="data deleted";
-	header("Location:".BASEURL."contact");
-	exit;
-}
-	$alldata=$dbobj->fetchAll("select * from contact order by id desc");
+						?>
+						<div style="min-height: 300px;color: #040; font-size: +2;">
+							Thank you for contacting us we will response soon!
+						</div>
+				<?php 
+						unset($_SESSION['msg']);
+				
+			}elseif(isset($_POST['name'])){
+						// echo "hello1";exit;
+
+						$dbobj->addEdit('contact',$_POST);
+						$_SESSION['msg']="true";
+						?>
 
 
-?>
-<style type="text/css">
-	table{
-		
-		font-size: 20px;
-	}
-</style>
-
-
-<table class="table table-bordered table-striped table-hover">
-	<tr>
-		<th>S.No.</th>
-		<th>Name</th>
-		<th>E-Mail</th>
-		<th>Mobile No.</th>
-		<th>Message</th>
-		<th>Action</th>
-	</tr>
-	<tr>
-		<td colspan="6"><a href="<?php echo BASEURL;?>contact/create">Add New Record</a></td>
-	</tr>
-	<?php
-	$sno=0;
-	foreach ($alldata as $data) {
-	?>
-	<tr>
-		<td><?php echo ++$sno; ?></td>
-		<td><?php echo $data['name'] ?></td>
-		<td><?php echo $data['email'] ?></td>
-		<td><?php echo $data['mobileno'] ?></td>
-		<td><?php echo $data['msg'] ?></td>
-		<td>
-			<a href="<?php echo BASEURL;?>contact/create/<?php echo $data['id']; ?>">Edit</a>&nbsp; &nbsp; | &nbsp; &nbsp;
-			<a href="#" onclick="delclick('<?php echo BASEURL;?>contact/index/<?php echo $data['id']; ?>')">Delete</a>
-		</td>
-	</tr>
-	<?php } ?>
-	
-</table>
-<script type="text/javascript">
-	function delclick(path)
-	{
-		if(confirm("do you want to delete this record")){
-			location.href=path;
-		}
-	}
-</script>
+						
+						<script type="text/javascript">
+							location.href="index";
+						</script>
+						<?php 
+					}else{
+					
+					?>
+						<form  method="post">
+						<input type="text" name="name" placeholder="Name" required="">
+						<input type="email" class="email" name="email" placeholder="Email" required="">
+						<div class="clearfix"> </div>
+						<input type="text" class="phone" name="mobileno" placeholder="Phone Number" required="">
+						<textarea placeholder="Message" name="msg" required=""></textarea>
+						<input type="submit" value="SUBMIT">
+					</form>
+					<?php
+				}
+				?>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+	</div>
+<!-- //contact -->

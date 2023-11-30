@@ -1,73 +1,76 @@
-<?php
-// $_SESSION['message']="data saved";
-if($id){
-	// session_start();
-	$dbobj->delete('banner',$id);
+	<!-- banner -->
+<div id="home" class="w3ls-banner"> 
+		<!-- banner-text -->
+		<div class="slider">
+			<div class="callbacks_container">
+				<ul class="rslides callbacks callbacks1" id="slider4">
+					<?php 
+					$banner_data=$dbobj->fetchAll("Select * from banner");
+					foreach ($banner_data as $banner_value) {
+					?>
+					<li>
+						<div class="">
+						<div class="banner-dott" style="background: url('<?php echo BASEURL."admin/public/images/$banner_value[image]";?>')">
+							<div class="container">
+								<div data-aos="fade-left" class="agileits-banner-info">
+									<h3><?php echo $banner_value['title']; ?></h3>
+									<p><?php echo $banner_value['description']; ?></p>
+								</div>	
+							</div>
+						</div>
+						</div>
+					</li>
+					<?php 
+					}
+					?>
+				</ul>
+			</div>
+			<div class="clearfix"> </div>
+			
+			<!--banner Slider starts Here-->
+		</div>
+		    <div class="thim-click-to-bottom">
+				<div class="rotate">
+					<a href="#about" class="scroll">
+						<i class="fa fa-long-arrow-down" aria-hidden="true"></i>
+					</a>
+				</div>
+			</div>
+ 
+</div>	
+<!-- //banner --> 
+<?php include "modules/about/index.php";?>
+<?php include "modules/services/index.php";?>
 
-	$_SESSION['message']="data deleted";
-	header("Location:".BASEURL."banner");
-	exit;
-}
-	$alldata=$dbobj->fetchAll("select * from banner order by id desc");
+<!-- team -->
+		<div class="team" id="team">
+			<div class="container">
+				<div class="heading">
+					<h3 data-aos="zoom-in" >Team</h3>
+				</div>
+				<div class="agile_team_grids">
+					<?php
+					$team_data=$dbobj->fetchAll("select * from team");
+					foreach ($team_data as $team_value) {
+					?>
+					<div data-aos="fade-up" class="col-md-3 agile_team_grid">
+						<div class="ih-item circle effect1">
+							<div class="spinner"></div>
+							<div class="img"><img src="<?php echo BASEURL."admin/public/images/$team_value[photo]";?>" alt=" " class="img-responsive" /></div>
+						</div>
+						<h4><?php echo $team_value['name'];?></h4>
+						<p><?php echo $team_value['title']; ?></p> 
+					</div>	
+					<?php } ?>
+				</div>
+					<div class="clearfix"> </div> 
+			</div>
+		</div>
+<!--//team-->
 
 
-?>
-<style type="text/css">
-	table{
-		
-		font-size: 18px;
-	}
-</style>
+
+<?php include "modules/food/index.php";?>
+<?php include "modules/contact/index.php";?>
 
 
-<table class="table table-bordered table-striped table-hover">
-	<tr>
-		<th>S.No.</th>
-		<th>Title</th>
-		<th>Description</th>
-		<th>Images</th>
-		<th>Action</th>
-	</tr>
-	<tr>
-		<td colspan="5"><a href="<?php echo BASEURL;?>banner/create">Add New Record</a></td>
-	</tr>
-	<?php
-	$sno=0;
-	foreach ($alldata as $data) {
-	?>
-	<tr>
-		<td><?php echo ++$sno; ?></td>
-		<td><?php echo $data['title'] ?></td>
-		<td><?php echo $data['description'] ?></td>
-		<td>
-			<?php if($data['image']){
-							if(file_exists("public/images/$data[image]")){
-							?>
-								<img class="one" src="<?php echo BASEURL."public/images/$data[image]";?>" height="50px" width="50px" />
-							<?php
-
-							}else{
-								echo "Not uploaded Properly";
-							}
-
-						}else{
-							echo "not uploaded";
-						}				
-			?>
-		</td>
-		<td>
-			<a href="<?php echo BASEURL;?>banner/create/<?php echo $data['id']; ?>">Edit</a>&nbsp; &nbsp; | &nbsp; &nbsp;
-			<a href="#" onclick="delclick('<?php echo BASEURL;?>banner/index/<?php echo $data['id']; ?>')">Delete</a>
-		</td>
-	</tr>
-	<?php } ?>
-	
-</table>
-<script type="text/javascript">
-	function delclick(path)
-	{
-		if(confirm("do you want to delete this record")){
-			location.href=path;
-		}
-	}
-</script>
